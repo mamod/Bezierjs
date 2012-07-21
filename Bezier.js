@@ -1,27 +1,22 @@
-(function($$){
+(function(){
 var Bezier = function(arg1){
     
-    var _B = this;
+    var _B = this,
+    args,$choose;
     
     _B.X = 0;
     _B.Y = 1;
     _B.CX = 2;
     _B.CY = 3;
-    
     _B.CURV = [];
     _B.line = [];
+    _B.ctrl = [];
     
-    _B.ctrl = new Array();
-    
-    
-    var args;
     if (typeof arg1 == 'object'){
         args = arg1;
     } else {
         args = [].splice.call(arguments,0);
     }
-    
-    
     
     var $length = args.length / 2,
     i = 0;
@@ -31,49 +26,37 @@ var Bezier = function(arg1){
         i++;
     };
     
-    
-    
     var $n = _B.ctrl.length - 1;
-    var $choose;
     
     for (var $k = 0; $k <= $n; $k++) {
+        
         if ($k == 0) {
             $choose = 1;
-        }
-        else if ($k == 1) {
+        } else if ($k == 1) {
             $choose = $n;
-        }
-        
-        else {
+        } else {
             $choose *= ($n - $k + 1) / $k;
         }
-        
         _B.ctrl[$k][_B.CX] = _B.ctrl[$k][_B.X] * $choose;
         _B.ctrl[$k][_B.CY] = _B.ctrl[$k][_B.Y] * $choose;
     }
-    
-    
 };
-
-
-
 
 Bezier.prototype = {
     
     bezier : function(){
-        var args = [].splice.call(arguments,0);
-        var _bb = new Bezier(args);
+        var args = [].splice.call(arguments,0),
+        _bb = new Bezier(args);
         this.ctrl = _bb.ctrl;
         return this;
     },
     
-    
     point : function($t){
         
-        var $self = this.ctrl;
-        var $size = $self.length;
-        var points = new Array()
-        , $point;
+        var $self = this.ctrl,
+        $size = $self.length,
+        points = []
+        ,$point;
         
         var $n = $size - 1;
         var $u = $t;
@@ -84,7 +67,6 @@ Bezier.prototype = {
             points.push([ $self[$k][this.CX] * $u, $self[$k][this.CY] * $u ]);
             $u *= $t;
         }
-        
         
         $point = points[$n];
         
@@ -97,15 +79,13 @@ Bezier.prototype = {
             $tt = $tt * $t1;
         }
         
-        return $point;
-        
+        return $point;  
     },
-    
     
     curve : function($npoints){
         
-        var points = [];
-        var $self = this.ctrl;
+        var points = [],
+        $self = this.ctrl;
         $npoints--;
         
         for (var $t = 0; $t <= $npoints; $t++) {
@@ -113,11 +93,8 @@ Bezier.prototype = {
         }
         
         this.CURV = points;
-        
         return this;
     },
-    
-    
     
     spline : function(x1,y1,x2,y2){
         
@@ -133,12 +110,11 @@ Bezier.prototype = {
         //var line = [];
         
         var $len = this.CURV.length - 1;
-        var $tt = this.CURV.length;
         
-        var $timing;
-        var $realX;
-        var $oldLength = this.line.length;
-        var irr;
+        var $timing,
+        $realX,
+        $oldLength = this.line.length,
+        irr;
         
         //define timing & x axis position functions -- FIXME
         if (y1 == 0 && y2 == 0 || yDiff == 0){
@@ -161,29 +137,35 @@ Bezier.prototype = {
             };
         }
         
-        
-        
-        
         for (var i = 0; i <= $len; i++){
             
-            var $x = this.CURV[i][0];
-            var $y = this.CURV[i][1];
+            var $x = this.CURV[i][0],
+            $y = this.CURV[i][1],
+            u = 0;
+            
             irr = i + $oldLength;
             
-            var u = 0;
-            
             this.line[irr] = {
+                
                 x : $realX($x,$y),
                 y : (($y*yDiff) + y1).toFixed(0),
-                time : $timing(1000,$x,irr)
+                time : function(ms){
+                    if (u > irr){ u = 0; }
+                    var tt = ( (ms/irr) * u ).toFixed(0);
+                    u++;
+                    return tt;
+                },
+                easing : $timing(1000,$x,irr)
             }
-            
         }
         
         return this;
-        
     },
     
+    reverse : function(){
+        this.ctrl = this.ctrl.reverse();
+        return this;
+    },
     
     get : function(){
         return this.line;
@@ -197,5 +179,3 @@ window.bezier = function () {
 }
 
 })();
-
-
