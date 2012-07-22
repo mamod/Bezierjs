@@ -1,4 +1,5 @@
-=head1 Bezierjs
+Bezierjs
+========
 
 Solution of Bezier Curves in javascript, it is a direct port from the Perl module
 Math::Bezier by Andy Wardley
@@ -9,7 +10,8 @@ This module implements the algorithm for the solution of Bezier curves
 as presented by Robert D. Miller in Graphics Gems V, "Quick and Simple
 Bezier Curve Drawing".
 
-=head1 SYNOPSIS
+SYNOPSIS
+========
     
     //bezier function accept as many points as you want
     //note that the first 2 points represent the starting points of the line
@@ -34,7 +36,8 @@ Bezier Curve Drawing".
     ]
     
 
-=head2 Chaining
+Chaining
+--------
 
     This module accepts chaining, so you can draw multi lines with different
     bezier control points
@@ -42,10 +45,11 @@ Bezier Curve Drawing".
     bezier(0, 0, 0.25, -.45, 1, .8, 1, 1).curve(30).spline(100,100,200,200);
     
 
-=head2 Splines
+Splines
+-------
     
-    You can draw multiple splines, each can have a different bezier control points
-    and curve points
+    //You can draw multiple splines, each can have a different bezier control points
+    //and curve points
     
     spline(x1,y1,x2,y2)
     
@@ -77,14 +81,16 @@ Bezier Curve Drawing".
     
 
 
-=head1 TODO
+TODO
+====
 
     * Adding some examples and usage cases
     * Fixing timing function for better easing
     * Read some math books to know how things really work in this module :P
 
     
-=head1 LICENSE (MIT)
+LICENSE (MIT)
+=============
     
     Copyright (c) 2012 Mamod Mehyar
 
@@ -94,4 +100,3 @@ Bezier Curve Drawing".
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     
-=cut
