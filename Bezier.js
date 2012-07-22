@@ -1,3 +1,11 @@
+
+/*
+* Bezier
+* MIT Licensed
+* @author Mamod Mehyar
+* http://twitter.com/mamod
+*/
+
 (function(){
 var Bezier = function(arg1){
     
@@ -119,8 +127,9 @@ Bezier.prototype = {
         //define timing & x axis position functions -- FIXME
         if (y1 == 0 && y2 == 0 || yDiff == 0){
             
-            $timing = function(ms,$x){
-                return (ms * $x ).toFixed(3);
+            $timing = function(ms,$x,$y,i){
+                var tt = ( ms * $x ).toFixed(3);
+                return tt;
             };
             
             $realX = function($x,$y){
@@ -128,8 +137,9 @@ Bezier.prototype = {
             };
             
         } else {
-            $timing = function(ms,$x,i){
-                return (( (ms/$len) * $x ) * i ).toFixed(3);
+            $timing = function(ms,$x,$y,i){
+                var tt = ( ( ms * ($x+$y)  )/2 ).toFixed(3);
+                return tt;
             };
             
             $realX = function($x,$y){
@@ -144,31 +154,33 @@ Bezier.prototype = {
             u = 0;
             
             irr = i + $oldLength;
+            var _l = this.CURV;
             
             this.line[irr] = {
                 
                 x : $realX($x,$y),
                 y : (($y*yDiff) + y1).toFixed(0),
+                
                 time : function(ms){
                     if (u > irr){ u = 0; }
-                    var tt = ( (ms/irr) * u ).toFixed(0);
+                    var tt = ( ((ms/irr) * u) ).toFixed(0);
                     u++;
                     return tt;
                 },
-                easing : $timing(1000,$x,irr)
+                easing : $timing(1000,$x,$y,irr)
             }
         }
         
         return this;
     },
     
-    reverse : function(){
-        this.ctrl = this.ctrl.reverse();
-        return this;
+    //return x,y object
+    getSpline : function(){
+        return this.line;
     },
     
-    get : function(){
-        return this.line;
+    getCurve : function(){
+        return this.CURV;
     }
     
 };
