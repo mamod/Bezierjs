@@ -1,4 +1,3 @@
-
 /*
 * Bezier
 * MIT Licensed
@@ -7,11 +6,14 @@
 */
 
 (function(){
-var Bezier = function(arg1){
+
+Bezier = function(arg1){
     
     var _B = this,
     args,$choose;
     
+    _B.constructor = 'Bezier';
+    _B.name = 'Bezier';
     _B.X = 0;
     _B.Y = 1;
     _B.CX = 2;
@@ -125,7 +127,7 @@ Bezier.prototype = {
         irr;
         
         //define timing & x axis position functions -- FIXME
-        if (y1 == 0 && y2 == 0 || yDiff == 0){
+        if (yDiff == 0){
             
             $timing = function(ms,$x,$y,i){
                 var tt = ( ms * $x ).toFixed(3);
@@ -165,6 +167,7 @@ Bezier.prototype = {
                     if (u > irr){ u = 0; }
                     var tt = ( ((ms/irr) * u) ).toFixed(0);
                     u++;
+                    //console.log();
                     return tt;
                 },
                 easing : $timing(1000,$x,$y,irr)
@@ -185,9 +188,15 @@ Bezier.prototype = {
     
 };
 
-window.bezier = function () {
-    var args = [].splice.call(arguments,0);
+window.bezier = function (args) {
+    
+    if (typeof args == 'object'){
+        args = args;
+    } else {
+        args = [].splice.call(arguments,0);
+    }
+    //args = [].splice.call(arguments,0);
     return new Bezier(args);
 }
 
-})();
+})(window.Bezier);
