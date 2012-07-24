@@ -4,7 +4,8 @@ Bezierjs
 Solution of Bezier Curves in javascript, it is a direct port from the Perl module
 Math::Bezier by Andy Wardley
     
-=head1 DESCRIPTION
+DESCRIPTION
+===========
 
 This module implements the algorithm for the solution of Bezier curves
 as presented by Robert D. Miller in Graphics Gems V, "Quick and Simple
