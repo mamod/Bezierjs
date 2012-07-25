@@ -28,11 +28,14 @@ Bezier = function(arg1){
         args = [].splice.call(arguments,0);
     }
     
+    //clone array;; we should avoid messing with the input array
+    var Arr = args.slice();
+    
     var $length = args.length / 2,
     i = 0;
     
     while (i < $length){
-        _B.ctrl.push( args.splice(0,2) );
+        _B.ctrl.push( Arr.splice(0,2) );
         i++;
     };
     
@@ -117,7 +120,6 @@ Bezier.prototype = {
         
         var xDiff = x2-x1;
         var yDiff = y2-y1;
-        //var line = [];
         
         var $len = this.CURV.length - 1;
         
@@ -195,8 +197,8 @@ window.bezier = function (args) {
     } else {
         args = [].splice.call(arguments,0);
     }
-    //args = [].splice.call(arguments,0);
+    
     return new Bezier(args);
 }
 
-})(window.Bezier);
+})();
