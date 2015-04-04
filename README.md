@@ -7,7 +7,7 @@ Solution of Bezier Curves in javascript, it is a direct port from the Perl modul
 DEMO
 ====
 
-See [Bezierjs Demo Page](http://mamod.me/bezierjs)
+See [Bezierjs Demo Page](https://dl.dropboxusercontent.com/u/3241507/Bezierjs/index.html)
 
 DESCRIPTION
 ===========
